@@ -1,0 +1,53 @@
+Problem statement
+You are tasked with creating a Java program that performs multiplication operations on integers. The program should utilize a helper class called "Helper" containing two overloaded methods for multiplication. The main class, named "Main," will take user input for one or more integers and call the appropriate method from the "Helper" class to calculate the product.
+
+simple input :
+5
+3
+7
+Sample output :
+15
+105
+
+
+-----------------------------------------------------------------------------------------------
+
+
+
+import java.util.Scanner;
+class Helper {
+	// Method 1
+	// Multiplication of 2 numbers
+	public int Multiplication(int x, int y){
+		int res = x*y;
+		return res;
+	}
+	// Method 2
+	// // Multiplication of 3 numbers
+	public int Multiplication(int x, int y, int z){
+		int res = x*y*z;
+		return res;
+	}
+}
+
+// Class 2
+class Solution {
+
+	// Main driver method
+	public static void main(String[] args)
+	{
+		// Take input using Scanner and print the output .
+
+		Scanner s = new Scanner(System.in); 
+		int x = s.nextInt();
+		int y= s.nextInt();
+		int z = s.nextInt();
+
+		Helper h = new Helper();
+		int result = h.Multiplication(x , y);
+		int result2 = h.Multiplication(x , y, z);
+
+		System.out.println(result);
+		System.out.println(result2);
+	}
+}
