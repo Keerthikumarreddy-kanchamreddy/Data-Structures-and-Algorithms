@@ -1,0 +1,54 @@
+Problem statement
+Given an array of length N and an integer x, you need to find all the indexes where x is present in the input array. Save all the indexes in the output array (in increasing order).
+
+Do this recursively. Indexing in the array starts from 0.
+
+Hint:
+Try making a helper function with the required arguments and call the helper function from the allIndexes function.
+
+
+Constraints :
+1 <= N <= 10^3
+Sample Input :
+5
+9 8 10 8 8
+8
+Sample Output :
+1 3 4
+
+
+-------------------------------------------------------------------------------------------
+
+
+
+public class Solution {
+
+	public static int[] allIndexes(int input[], int x) {
+
+		return helper(input, x, 0);
+	}
+
+	private static int[] helper(int input[], int x, int si){
+
+		if(si == input.length){
+			return new int[0];
+		}
+
+		int smallArr[] = helper(input , x, si+1);
+
+		if(input[si] != x){
+			return smallArr;
+		}else{
+			int ans[] = new int[smallArr.length+1];
+			ans[0] = si; 
+
+			for(int i=0; i<smallArr.length;i++){
+				ans[i+1] = smallArr[i];
+			} 
+
+			return ans;
+		}
+		
+	}
+	
+}
