@@ -1,0 +1,66 @@
+Problem statement
+Given an array A of size n and an integer K, return all subsets of A which sum to K.
+
+Subsets are of length varying from 0 to n, that contain elements of the array. But the order of elements should remain same as in the input array.
+
+
+Note :
+The order of subsets are not important.
+
+Constraints :
+1 <= n <= 20
+
+Sample Input :
+9 
+5 12 3 17 1 18 15 3 17 
+6
+Sample Output :
+3 3
+5 1
+
+
+------------------------------------------------------------------------------------------
+
+
+public class solution {
+
+	public static int[][] subsetsSumK(int input[], int k) {
+
+        return subsetsSumK(input,k,0);
+	}
+
+    public static int[][] subsetsSumK(int input[], int k, int si){
+
+        if(si == input.length){
+
+            if(k==0){
+                return new int[1][0];
+            }else{
+                return new int[0][0];
+            }
+        }
+
+        int op1[][] = subsetsSumK(input, k-input[si], si+1);
+        int op2[][] = subsetsSumK(input, k, si+1);
+        int ans[][]= new int[op1.length + op2.length][];
+
+        int a=0; 
+        for(int i =0; i<op2.length; i++){
+            ans[i] = new int[op2[i].length]; 
+            for(int j=0; j<op2[i].length; j++){
+                ans[a][j] = op2[i][j];
+            }
+            a++;
+        }
+
+        for(int i =0; i<op1.length; i++){
+            ans[a+i] = new int[op1[i].length+1]; 
+            ans[a+i][0] = input[si];
+            for(int j=1; j<=op1[i].length; j++){
+                ans[a+i][j] = op1[i][j-1];
+            }
+        }
+
+        return ans;
+    }
+}

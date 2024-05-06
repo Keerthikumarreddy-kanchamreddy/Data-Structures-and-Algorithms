@@ -1,0 +1,87 @@
+Problem statement
+Given an integer n, using phone keypad find out all the possible strings that can be made using digits of input n.
+
+Return empty string for numbers 0 and 1.
+
+Note :
+1. The order of strings are not important.
+2. Input and output has already been managed for you. You just have to populate the output array and return the count of elements populated in the output array.
+
+Constraints :
+1 <= n <= 10^6
+
+Sample Input:
+23
+Sample Output:
+ad
+ae
+af
+bd
+be
+bf
+cd
+ce
+cf
+
+
+--------------------------------------------------------------------------------------------
+
+
+public class solution {
+    
+    public  static String[] helper(int n){
+      
+        if(n <= 1 || n>=10){
+        System.out.print(0);
+        }
+
+        if(n==2){
+            String ansfinal[]={"a","b","c"};
+            return ansfinal;
+        }else if(n==3){
+            String ansfinal[]={"d","e","f"};
+            return ansfinal;
+        }else if(n==4){
+            String ansfinal[]={"g","h","i"};
+            return ansfinal;
+        }else if(n==5){
+            String ansfinal[]={"j","k","l"};
+            return ansfinal;
+        }else if(n==6){
+            String ansfinal[]={"m","n","o"};
+            return ansfinal;
+        }else if(n==7){
+            String ansfinal[]={"p","q","r","s"};
+            return ansfinal;
+        }else if(n==8){
+            String ansfinal[]={"t","u","v"};
+            return ansfinal;
+        }else{
+            String ansfinal[]={"w","x","y","z"};
+            return ansfinal;
+        }
+    }
+	public static String[] keypad(int n){
+		// Write your code here
+        
+        if(n==0){
+            String[] ans = {""};
+			return ans;
+        }
+        
+        String small[]=keypad(n/10);
+        String ans1[]=helper(n%10);
+    
+        String ansfinal[]=new String[ans1.length * small.length];
+        int k=0;
+        for(int i=0;i<ans1.length;i++)
+        {
+            for(int j=0;j<small.length;j++){
+                ansfinal[k] = small[j]+ans1[i];
+                k++;
+            }
+        }
+        
+       return ansfinal; 
+	}
+}
