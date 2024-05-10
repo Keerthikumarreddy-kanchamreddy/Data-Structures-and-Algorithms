@@ -1,0 +1,96 @@
+Problem statement
+You have been given a head to a singly linked list of integers. Write a function check to whether the list given is a 'Palindrome' or not.
+
+
+Constraints :
+1 <= t <= 10^2
+0 <= M <= 10^5
+Time Limit: 1sec
+
+Where 'M' is the size of the singly linked list.
+Sample Input 1 :
+1
+9 2 3 3 2 9 -1
+Sample Output 1 :
+true
+Sample Input 2 :
+2
+0 2 3 2 5 -1
+-1
+Sample Output 2 :
+false
+true
+Explanation for the Sample Input 2 :
+For the first query, it is pretty intuitive that the the given list is not a palindrome, hence the output is 'false'.
+
+For the second query, the list is empty. An empty list is always a palindrome , hence the output is 'true'.
+
+
+--------------------------------------------------------------------------------------------
+
+
+/*
+
+	Following is the Node class already written for the Linked List
+
+	class Node<T> {
+    	T data;
+    	Node<T> next;
+    
+    	public Node(T data) {
+        	this.data = data;
+    	}
+	}
+
+*/
+
+public class Solution {
+
+	public static Node<Integer> midList(Node<Integer> currNode){
+		Node<Integer> slow = currNode;
+		Node<Integer> fast = currNode;
+
+		while(fast.next != null && fast.next.next != null){
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+
+		return slow;
+	}
+
+	public static Node<Integer> reversedList(Node<Integer> currNode){
+		Node<Integer> prev  = null;
+		Node<Integer> forw = null;
+
+		while(currNode != null){
+			forw = currNode.next;
+			currNode.next = prev; 
+			prev = currNode;
+			currNode = forw; 
+		}
+
+		return prev;
+	}
+
+	public static boolean isPalindrome(Node<Integer> head) {
+
+		if(head == null || head.next == null){
+			return true;
+		}
+
+		Node<Integer> mid = midList(head);
+		Node<Integer> revHead = reversedList(mid);
+
+		while(head != null && revHead != null){
+			if(head.data != revHead.data){
+				return false;
+			}
+
+			head = head.next;
+			revHead = revHead.next;
+		}
+
+		return true;
+	}
+
+}
