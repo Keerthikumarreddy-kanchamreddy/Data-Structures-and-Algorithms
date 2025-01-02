@@ -1,0 +1,89 @@
+Problem statement
+Given a Binary tree, find the largest BST subtree. That is, you need to find the BST with maximum height in the given binary tree. You have to return the height of largest BST.
+
+Note :
+The binary tree will be consisting of only unique elements.
+Detailed explanation ( Input/output format, Notes, Images )
+Constraints:
+1 ≤ Number of nodes ≤ 10^5
+1 ≤ Data of a node ≤ 10^6
+
+Time Limit: 1 second
+
+Sample Input 1:
+5 10 6 2 3 -1 -1 -1 -1 -1 9 -1 -1
+
+Sample Output 1:
+2
+
+
+
+------------------------------------------------------------------------------------------
+
+
+
+ class nodeInfo{
+		 int height; 
+		 int min;
+		 int max;
+		 boolean isBST;
+
+		 nodeInfo(){}
+
+		 nodeInfo(int height, int min, int max, boolean isBST){
+			 this.height = height;
+			 this.min = min;
+			 this.max = max;
+			 this.isBST = isBST;
+		 }
+	 }
+
+public class Solution {
+	/*
+	 * BinaryTreeNode class
+	 * 
+	 * class BinaryTreeNode<T> 
+	 * { 
+	 * 		T data; 
+	 * 		BinaryTreeNode<T> left; 
+	 * 		BinaryTreeNode<T> right;
+	 *		public BinaryTreeNode(T data) 
+	 *		{
+	 *  		this.data = data; 
+	 *  	} 
+	 *  }
+	 */
+
+	
+	public static int largestBSTSubtree(BinaryTreeNode<Integer> root) {
+		// Write your code here
+
+		nodeInfo ans  = largestBSThelper(root);
+		return ans.height;
+	}
+
+	public static nodeInfo largestBSThelper(BinaryTreeNode<Integer> root){
+
+		if(root == null){
+			return new nodeInfo(0, Integer.MAX_VALUE, Integer.MIN_VALUE,true);
+		}
+
+		nodeInfo left = largestBSThelper(root.left);
+		nodeInfo right = largestBSThelper(root.right);
+
+		nodeInfo returnInfo = new nodeInfo();
+
+		returnInfo.min = Math.min(left.min, root.data);
+		returnInfo.max = Math.max(right.max, root.data);
+		returnInfo.isBST = left.isBST && right.isBST && root.data > left.max && root.data < right.min;
+
+		if(returnInfo.isBST){
+			returnInfo.height = Math.max(left.height, right.height) +1;
+		}else{
+			returnInfo.height = Math.max(left.height, right.height);
+		}
+
+		return returnInfo;
+	}
+
+}
