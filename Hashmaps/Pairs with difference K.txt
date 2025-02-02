@@ -1,0 +1,81 @@
+Problem statement
+You are given with an array of integers and an integer K. You have to find and print the count of all such pairs which have difference K.
+
+Note: Take absolute difference between the elements of the array.
+
+
+Constraints :
+0 <= n <= 10^4
+Time Limit: 1 sec
+
+Sample Input 1 :
+4 
+5 1 2 4
+3
+
+Sample Output 1 :
+2
+
+Explanation
+(5,2) and (1,4) are the possible combinations as their absolute difference is 3.
+
+Sample Input 2 :
+4
+4 4 4 4 
+0
+
+Sample Output 2 :
+6
+
+
+-------------------------------------------------------------------------------------------
+
+
+
+import java.util.HashMap;
+
+public class Solution {
+
+	public static int getPairsWithDifferenceK(int arr[], int k) {
+		//Write your code here
+		HashMap<Integer, Integer> map = new HashMap<>();
+		int pairs=0;
+
+		for(int i=0; i<arr.length; i++){
+			if(map.containsKey(arr[i])){
+				int val = map.get(arr[i]);
+				map.put(arr[i], val+1);
+			}else{
+				map.put(arr[i], 1);
+			}
+		}
+
+		if(k==0){
+			for(int i=0; i<arr.length; i++){
+				int val = map.get(arr[i]);
+				pairs = pairs + (val * (val-1))/2;
+				map.put(arr[i],0);
+			}
+
+			return pairs;
+		}
+
+		for(int i=0; i<arr.length; i++){
+			int temp1 = arr[i] +k;
+			int temp2 = arr[i] -k;
+
+			if(map.containsKey(arr[i]) && map.containsKey(temp1)){
+				pairs = pairs +( map.get(arr[i]) * map.get(temp1) );
+			}
+
+			if(map.containsKey(arr[i]) && map.containsKey(temp2)){
+				pairs = pairs + (map.get(arr[i]) * map.get(temp2) );
+			}
+
+			map.remove(arr[i]);
+			
+		}
+
+		return pairs;
+	}
+}
